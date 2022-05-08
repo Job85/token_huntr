@@ -1,0 +1,17 @@
+{
+  "development": {
+    "database": "token_huntr_development",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "database": "token_huntr_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "database": "token_huntr_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
