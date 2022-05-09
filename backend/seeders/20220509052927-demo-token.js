@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Tokens', [{
+    await queryInterface.bulkInsert('tokens', [{
       code: 'D3M0 C0D3',
       locationId: 1,
       createdAt: new Date(),
@@ -11,6 +11,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Tokens', null, {})
+    await queryInterface.bulkDelete('tokens', null, {})
   }
 };
