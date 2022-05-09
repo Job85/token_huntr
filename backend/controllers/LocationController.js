@@ -10,7 +10,22 @@ const GetLocation = async (req, res) => {
     }
 }
 
+const PostCache = async (req, res) => {
+    const userId = parseInt(req.params.userId)
+    try {
+        let buildCache = {
+            userId,
+            ...req.body
+        }
+        const createCache = await Location.create(buildCache)
+        res.send(createCache)
+    } catch (error) {
+        throw error
+    }
+}
+
 
 module.exports = {
-    GetLocation
+    GetLocation,
+    PostCache
 }
