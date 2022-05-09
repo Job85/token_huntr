@@ -2,7 +2,9 @@ const { Token } = require('../models')
 
 const GetToken = async (req, res) => {
     try {
-        const token = await Token.findAll()
+        const token = await Token.findAll({
+            attributes: ['locationId']
+        })
         console.log(token)
         res.send(token)
     } catch (error) {
