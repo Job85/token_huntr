@@ -27,7 +27,7 @@ const PostCache = async (req, res) => {
 
 const UpdateCache = async (req, res) => {
     try {
-        let locationId = parseInt(req.params.postId)
+        let locationId = parseInt(req.params.locationId)
         const updateCache = await Location.update(req.body, {
             where: { id: locationId },
             returning: true
