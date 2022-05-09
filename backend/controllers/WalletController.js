@@ -41,9 +41,23 @@ const CreateWallet = async (req, res) => {
     }
 }
 
+const WalletTransaction = async (req, res) => {
+    try {
+        let walletId = parseInt(req.params.wallet_id)
+        const transaction = await Wallet.update(req.body, {
+            where: { id: walletId },
+            returning: true
+        })
+        console.log(transaction)
+        res.send(transaction)
+    } catch (error) {
+        throw error
+    }
+}
 
 module.exports = {
     GetWallet,
     GetMyWallet,
-    CreateWallet
+    CreateWallet,
+    WalletTransaction
 }
