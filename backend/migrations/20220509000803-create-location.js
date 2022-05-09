@@ -1,6 +1,6 @@
 'use strict';
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('locations', {
       id: {
         allowNull: false,
@@ -9,16 +9,24 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       latitude: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       longitude: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       level: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'users',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -30,7 +38,7 @@ module.exports = {
       }
     });
   },
-  async down(queryInterface, Sequelize) {
+  down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('locations');
   }
 };
