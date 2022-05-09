@@ -14,7 +14,12 @@ module.exports = (sequelize, DataTypes) => {
       Location.hasMany(models.Token, {
         foreignKey: 'locationId'
       })
-      Location.belongsTo(models.User)
+      Location.belongsTo(models.User, {
+        foreignKey: 'userId',
+        as: 'user',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      })
     }
   }
   Location.init({
