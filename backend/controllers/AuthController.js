@@ -1,65 +1,67 @@
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-require('dotenv').config()
-const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS)
-const APP_SECRET = `${process.env.APP_SECRET}`
+const { User } = require('../models')
+const middleware = require('../middleware')
 
-const hashPassword = async (password) => {
-    // Accepts a password from the request body
-    let hashedPassword = await bcrypt.hash(password, SALT_ROUNDS)
-    // Creates a hashed password and encrypts it 25 times
-    return hashedPassword
-}
-
-const comparePassword = async (storedPassword, password) => {
-    // Accepts the password provided in the login request and the currently stored password
-    // Compares the two passwords for a match
-    let passwordMatch = await bcrypt.compare(password, storedPassword)
-    // Returns true if the passwords match
-    // Returns false if the passswords are not a match
-    return passwordMatch
-}
-
-const createToken = (payload) => {
-    // Accepts a payload with which to create the token
-    let token = jwt.sign(payload, APP_SECRET)
-    // Generates the token and encrypts it, returns the token when the process finishes
-    return token
-}
-
-const verifyToken = (req, res, next) => {
-    const { token } = res.locals
-    // Gets the token store in the request lifecycle state
-    let payload = jwt.verify(token, APP_SECRET)
-    // Verifies the token is correct
-    if (payload) {
-        res.locals.payload = payload // Passes the decoded payload to the next function
-
-        // Calls the next function if the token is valid
-        return next()
-    }
-    res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
-}
-
-const stripToken = (req, res, next) => {
+const Login = async (req, res) => {
     try {
-        const token = req.headers['authorization'].split(' ')[1]
-        // Gets the token from the request headers {authorization: Bearer Some-Toke}
-        // Splits the value of the authorization header
-        if (token) {
-            res.locals.token = token
-            // If the token exists we add it to the request lifecycle state
-            return next()
+        const user = await User.findOne({
+            where: { email: req.body.email },
+            raw: true
+        })
+        if (
+            user &&
+            (await middleware.comparePassword(user.passwordDigest, req.body.password))
+        ) {
+            let payload = {
+                id: user.id,
+                email: user.email
+            }
+            let token = middleware.createToken(payload)
+            return res.send({ user: payload, token })
         }
-    } catch (error) {
         res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
+    } catch (error) {
+        throw error
     }
+}
+
+const Register = async (req, res) => {
+    try {
+        const { email, password } = req.body
+        let passwordDigest = await middleware.hashPassword(password)
+        const user = await User.create({ email, passwordDigest })
+        res.send(user)
+    } catch (error) {
+        throw error
+    }
+}
+
+const UpdatePassword = async (req, res) => {
+    try {
+        const { oldPassword, newPassword } = req.body
+        const user = await User.findByPk(req.params.userId)
+        if (
+            user &&
+            (await middleware.comparePassword(
+                user.dataValues.passwordDigest,
+                oldPassword
+            ))
+        ) {
+            let passwordDigest = await middleware.hashPassword(newPassword)
+            await user.update({ passwordDigest })
+            return res.send({ status: 'Ok', payload: user })
+        }
+        res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
+    } catch (error) { }
+}
+
+const CheckSession = async (req, res) => {
+    const { payload } = res.locals
+    res.send(payload)
 }
 
 module.exports = {
-    stripToken,
-    verifyToken,
-    createToken,
-    comparePassword,
-    hashPassword
+    Login,
+    Register,
+    UpdatePassword,
+    CheckSession
 }
