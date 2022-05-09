@@ -1,5 +1,5 @@
-const { Wallet } = require('../models')
-const { Token } = require('../models')
+const { Wallet, Token } = require('../models')
+
 
 const GetMyWallet = async (req, res) => {
     try {
