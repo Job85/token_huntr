@@ -39,9 +39,26 @@ const UpdateCache = async (req, res) => {
     }
 }
 
+const DeleteCache = async (req, res) => {
+    try {
+        let id = parseInt(req.params.locationId)
+        let userId = parseInt(req.params.userId)
+        await Location.destroy({
+            where: {
+                id,
+                userId
+            }
+        })
+        res.send({ message: `Location ${id}, was deleted` })
+    } catch (error) {
+        throw error
+    }
+}
+
 
 module.exports = {
     GetLocation,
     PostCache,
-    UpdateCache
+    UpdateCache,
+    DeleteCache
 }

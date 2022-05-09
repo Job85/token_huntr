@@ -4,6 +4,7 @@ const controller = require('../controllers/LocationController')
 Router.get('/', controller.GetLocation)
 Router.post('/create_cache/:userId', controller.PostCache)
 Router.put('/update_cache/:locationId', controller.UpdateCache)
+Router.delete('/delete_cache/:locationId/:userId', controller.DeleteCache)
 
 
 module.exports = Router
