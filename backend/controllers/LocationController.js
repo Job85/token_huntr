@@ -17,8 +17,23 @@ const PostCache = async (req, res) => {
             userId,
             ...req.body
         }
+        console.log(req.body)
         const createCache = await Location.create(buildCache)
         res.send(createCache)
+    } catch (error) {
+        throw error
+    }
+}
+
+const UpdateCache = async (req, res) => {
+    try {
+        let locationId = parseInt(req.params.postId)
+        const updateCache = await Location.update(req.body, {
+            where: { id: locationId },
+            returning: true
+        })
+        console.log(updateCache)
+        res.send(updateCache)
     } catch (error) {
         throw error
     }
@@ -27,5 +42,6 @@ const PostCache = async (req, res) => {
 
 module.exports = {
     GetLocation,
-    PostCache
+    PostCache,
+    UpdateCache
 }
