@@ -1,11 +1,12 @@
 const { Wallet } = require('../models')
+const { Token } = require('../models')
 
 const GetMyWallet = async (req, res) => {
     try {
         const wallet = await Wallet.findAll({
             attributes: ['ownerId'],
             include: [{
-                model: Tokens,
+                model: Token,
                 as: 'owner',
                 // through: { attributes: [] },
                 // attributes: ['id', 'code']
