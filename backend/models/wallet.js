@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Wallet.hasMany(models.Token, {
         through: models.TokenWallet,
-        as: 'tokens',
         foreignKey: 'walletId',
+        as: 'tokens',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       })
