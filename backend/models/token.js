@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Token.belongsTo(models.Location)
       Token.belongsToMany(models.Wallet, {
-        through: models.TokenWallet,
+        through: 'TokenWallet',
         as: 'wallets',
         foreignKey: 'tokenId',
       })
