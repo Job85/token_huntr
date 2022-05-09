@@ -12,9 +12,17 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Wallet.hasMany(models.Token, {
-        foreignKey: 'tokenId'
+        foreignKey: 'walletId',
+        as: 'tokens',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       })
-      Wallet.belongsTo(models.User)
+      Wallet.belongsTo(models.User, {
+        foreignKey: 'ownerId',
+        as: 'owner',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      })
     }
   }
   Wallet.init({
@@ -42,6 +50,15 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING
     },
+    ownerId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'users',
+        key: 'id'
+      }
+    }
   }, {
     sequelize,
     modelName: 'Wallet',
