@@ -13,20 +13,14 @@ const GetWallet = async (req, res) => {
 }
 const GetMyWallet = async (req, res) => {
     try {
-        const wallet = await Wallet.findAll({
+        const myWallet = await Wallet.findAll({
             attributes: ['ownerId'],
-            // include: [{
-            //     model: Token,
-            //     as: 'token',
-            //     through: { attributes: [] },
-            //     attributes: ['id', 'code']
-            // where: {
-            //     userd: req.params.user_id
-            // }
-            // }],
+            where: {
+                ownerId: req.params.user_id
+            }
         })
-        console.log(wallet)
-        res.send(wallet)
+        console.log(myWallet)
+        res.send(myWallet)
     } catch (error) {
         throw error
     }
