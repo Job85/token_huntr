@@ -12,6 +12,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       locationId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {

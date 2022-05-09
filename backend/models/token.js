@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE'
       })
       Token.belongsTo(models.Wallet, {
-        foreignKey: 'tokenId',
-        as: 'wallets',
+        foreignKey: 'walletId',
+        as: 'wallet',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       })
@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   Token.init({
     code: DataTypes.STRING,
     locationId: {
+      allowNull: false,
       type: DataTypes.INTEGER,
       onDelete: 'CASCADE',
       references: {
@@ -43,7 +44,6 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     }
-
   }, {
     sequelize,
     modelName: 'Token',
