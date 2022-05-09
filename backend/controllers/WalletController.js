@@ -3,7 +3,7 @@ const { Wallet, Token } = require('../models')
 const GetWallet = async (req, res) => {
     try {
         const wallet = await Wallet.findAll({
-            attributes: ['ownerId']
+            // attributes: ['ownerId']
         })
         console.log(wallet)
         res.send(wallet)
@@ -26,8 +26,24 @@ const GetMyWallet = async (req, res) => {
     }
 }
 
+const CreateWallet = async (req, res) => {
+    const ownerId = parseInt(req.params.owner_id)
+    try {
+        let makeWallet = {
+            ownerId,
+            ...req.body
+        }
+        console.log(req.body)
+        const createWallet = await Wallet.create(makeWallet)
+        res.send(createWallet)
+    } catch (error) {
+        throw error
+    }
+}
+
 
 module.exports = {
     GetWallet,
     GetMyWallet,
+    CreateWallet
 }
