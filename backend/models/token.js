@@ -11,11 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Token.belongsTo(models.Location)
-      Token.belongsToMany(models.Wallet, {
-        through: 'TokenWallet',
-        as: 'wallets',
+      Token.belongsTo(models.Location, {
+        foreignKey: 'locationId',
+        as: 'location',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      })
+      Token.belongsTo(models.Wallet, {
         foreignKey: 'tokenId',
+        as: 'wallets',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       })
     }
   }
@@ -28,7 +34,16 @@ module.exports = (sequelize, DataTypes) => {
         model: 'locations',
         key: 'id'
       }
+    },
+    walletId: {
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'wallets',
+        key: 'id'
+      }
     }
+
   }, {
     sequelize,
     modelName: 'Token',

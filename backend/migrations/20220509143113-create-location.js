@@ -1,21 +1,38 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('tokens', {
+    await queryInterface.createTable('locations', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      code: {
+      latitude: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        validate: {
+          min: -90.000000,
+          max: 90.000000
+        }
+      },
+      longitude: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        validate: {
+          min: -180.000000,
+          max: 180.000000
+        }
+      },
+      level: {
+        allowNull: false,
         type: Sequelize.STRING
       },
-      locationId: {
+      userId: {
         type: Sequelize.INTEGER,
-        onDelete: '',
+        onDelete: 'CASCADE',
         references: {
-          model: 'locations',
+          model: 'users',
           key: 'id'
         }
       },
@@ -30,6 +47,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('tokens');
+    await queryInterface.dropTable('locations');
   }
 };

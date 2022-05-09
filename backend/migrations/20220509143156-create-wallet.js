@@ -1,34 +1,39 @@
 'use strict';
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('locations', {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('wallets', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      latitude: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        validate: {
-          min: -90.000000,
-          max: 90.000000
-        }
-      },
-      longitude: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        validate: {
-          min: -180.000000,
-          max: 180.000000
-        }
-      },
-      level: {
+      seedPhrase1: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      userId: {
+      seedPhrase2: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      seedPhrase3: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      seedPhrase4: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      seedPhrase5: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      seedPhrase6: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      ownerId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
@@ -46,7 +51,7 @@ module.exports = {
       }
     });
   },
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('locations');
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('wallets');
   }
 };

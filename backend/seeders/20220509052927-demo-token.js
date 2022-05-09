@@ -5,6 +5,7 @@ module.exports = {
     await queryInterface.bulkInsert('tokens', [{
       code: 'D3M0 C0D3',
       locationId: 1,
+      walletId: 1,
       createdAt: new Date(),
       updatedAt: new Date()
     }])
