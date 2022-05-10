@@ -12,6 +12,22 @@ const GetToken = async (req, res) => {
     }
 }
 
+const MintToken = async (req, res) => {
+    const locationId = parseInt(req.params.location_id)
+    try {
+        let forgeToken = {
+            locationId,
+            ...req.body
+        }
+        console.log(req.body)
+        const produceToken = await Token.create(forgeToken)
+        res.send(produceToken)
+    } catch (error) {
+        throw error
+    }
+}
+
 module.exports = {
-    GetToken
+    GetToken,
+    MintToken
 }

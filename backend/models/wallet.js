@@ -12,10 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Wallet.hasMany(models.Token, {
-        foreignKey: 'tokenId',
-        as: 'token',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        foreignKey: 'locationId'
       })
       Wallet.belongsTo(models.User, {
         foreignKey: 'ownerId',
