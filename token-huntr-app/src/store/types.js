@@ -1,3 +1,4 @@
 export const WALLET_LOADING = 'WALLET_LOADING'
 export const GET_WALLET = 'GET_WALLET'
+export const LOAD_LOCATION = 'LOAD_LOCATION'
 export const GET_LOCATIONS = 'GET_LOCATIONS'
