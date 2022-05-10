@@ -1,5 +1,5 @@
 import { getLocations } from "../../services/LocationServices";
-import { GET_LOCATIONS } from "../types";
+import { GET_LOCATIONS, ADD_LOCATION } from "../types";
 
 export const LoadLocations = () => {
     return async (dispatch) => {
@@ -17,6 +17,6 @@ export const LoadLocations = () => {
 }
 
 export const AddLocation = (location) => ({
-    type: 'ADD_LOCATION',
+    type: ADD_LOCATION,
     payload: location
 })
