@@ -15,3 +15,8 @@ export const LoadLocations = () => {
         }
     }
 }
+
+export const AddLocation = (location) => ({
+    type: 'ADD_LOCATION',
+    payload: location
+})
