@@ -7,6 +7,9 @@ function App() {
       <header className="App-header">
         <Nav />
       </header>
+      <h1>
+        Token Huntr
+      </h1>
     </div>
   );
 }
