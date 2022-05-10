@@ -1,0 +1,2 @@
+export const GET_WALLET = 'GET_WALLET'
+export const GET_LOCATIONS = 'GET_LOCATIONS'
