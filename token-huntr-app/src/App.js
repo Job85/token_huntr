@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import Nav from './components/Nav';
 import './App.css';
 import LocationForm from './components/LocationForm';
+import Home from './components/Home';
 
 function App() {
   return (
