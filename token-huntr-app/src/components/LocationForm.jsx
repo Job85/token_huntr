@@ -1,41 +1,48 @@
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { LoadLocations } from '../store/actions/LocationActions'
-import { useEffect } from 'react'
+import React, { useReducer } from 'react';
+import LocationReducer from '../store/reducers/LocationReducer';
 
-const mapStateToProps = ({ locationsState }) => {
-    return { locationsState }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchLocations: () => dispatch(LoadLocations())
-    }
-}
 
 const LocationForm = (props) => {
 
     return (
-        <form>
-            <input type='text'
-                name='newLocation'
-                value={props.newLocation.latitude}
-                onChange={props.handleChange}
-            />
-            <input type='text'
-                name='newLocation'
-                value={props.newLocation.longitude}
-                onChange={props.handleChange}
-            />
-            <input type='text'
-                name='newLocation'
-                value={props.newLocation.level}
-                onChange={props.handleChange}
-            />
-            <button type='submit' onClick={props.handleSubmit}>
-                Add Location
-            </button>
-        </form>
+        <div className='local-form'>
+            <h2>Add a New Geocache</h2>
+            <h4>Fill out form below!</h4>
+            <form onSubmit={props.handleSubmit}>
+                <ul>
+                    <ul>
+                        <label>Latitude:</label>
+                        <input type='text'
+                            placeholder={'Latitude'}
+                            name='newLocation'
+                            value={props.newLocation.latitude}
+                            onChange={props.handleChange}
+                        />
+                    </ul>
+                    <ul>
+                        <label>Longitude:</label>
+                        <input type='text'
+                            placeholder={'Longitude'}
+                            name='newLocation'
+                            value={props.newLocation.longitude}
+                            onChange={props.handleChange}
+                        />
+                    </ul>
+                    <ul>
+                        <label>Level:</label>
+                        <input type='text'
+                            placeholder={'Level'}
+                            name='newLocation'
+                            value={props.newLocation.level}
+                            onChange={props.handleChange}
+                        />
+                    </ul>
+                    <button type='submit' onClick={props.handleSubmit}>
+                        Add Cache
+                    </button>
+                </ul>
+            </form>
+        </div>
     )
 }
 
