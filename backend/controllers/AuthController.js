@@ -38,7 +38,7 @@ const Register = async (req, res) => {
 const UpdatePassword = async (req, res) => {
     try {
         const { oldPassword, newPassword } = req.body
-        const user = await User.findByPk(req.params.userId)
+        const user = await User.findByPk(req.params.user_id)
         if (
             user &&
             (await middleware.comparePassword(
