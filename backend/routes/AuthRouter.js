@@ -3,6 +3,7 @@ const controller = require('../controllers/AuthController')
 const middleware = require('../middleware')
 
 Router.post('/login', controller.Login)
+Router.post('/register', controller.Register)
 
 
 module.exports = Router
