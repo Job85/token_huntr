@@ -1,5 +1,7 @@
+import { Route, Routes } from 'react-router-dom'
 import Nav from './components/Nav';
 import './App.css';
+import LocationForm from './components/LocationForm';
 
 function App() {
   return (
@@ -10,6 +12,13 @@ function App() {
       <h1>
         Token Huntr
       </h1>
+      <div>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/locations' element={<Locations />} />
+          <Route path='/locations' element={<LocationForm />} />
+        </Routes>
+      </div>
     </div>
   );
 }
