@@ -1,10 +1,10 @@
-import { getLocations } from "../../services/LocationServices";
+import { GetLocations } from "../../services/LocationServices";
 import { GET_LOCATIONS, ADD_LOCATION, NEW_LOCATION, UPDATE_LOCATION, REMOVE_LOCATION } from "../types";
 
 export const LoadLocations = () => {
     return async (dispatch) => {
         try {
-            const locations = await getLocations()
+            const locations = await GetLocations()
             dispatch({
                 type: GET_LOCATIONS,
                 payload: locations
