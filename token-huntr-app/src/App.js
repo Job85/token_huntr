@@ -7,8 +7,32 @@ import Home from './components/Home'
 import LocationList from './components/LocationList';
 // import LocationForm from './components/LocationForm';
 import './App.css';
+import { CheckSession } from './services/Auth';
+import { useState, useEffect } from 'react';
 
-function App() {
+const App = () => {
+  const [authenticated, toggleAuthenticated] = useState(false)
+  const [user, setUser] = useState(null)
+
+  const checkToken = async () => {
+    const user = await CheckSession();
+    setUser(user);
+    toggleAuthenticated(true);
+  }
+
+  const handleLogOut = () => {
+    setUser(null)
+    toggleAuthenticated(false)
+    localStorage.clear()
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      checkToken()
+    }
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
