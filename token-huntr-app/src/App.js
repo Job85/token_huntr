@@ -1,8 +1,11 @@
 import { Route, Routes } from 'react-router-dom'
 import Nav from './components/Nav';
-// import LocationForm from './components/LocationForm';
-import Home from './components/Home';
+import Landing from './pages/LandingPage'
+import Register from './pages/Register';
+import Login from './pages/Login.js'
+import Home from './components/Home'
 import LocationList from './components/LocationList';
+// import LocationForm from './components/LocationForm';
 import './App.css';
 
 function App() {
@@ -16,8 +19,15 @@ function App() {
       </h1>
       <div>
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/locations' element={<LocationList />} />
+          <Route path='/' element={<Landing />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='login' element={<Login
+            setUser={setUser}
+            toggleAuthenticated={toggleAuthenticated} />} />
+          <Route path='/home' element={<Home />} />
+          <Route path='/locations' element={<LocationList
+            user={user}
+            authenticated={authenticated} />} />
           {/* <Route path='/locations/create' element={<LocationForm />} /> */}
         </Routes>
       </div>
