@@ -9,10 +9,10 @@ const Landing = () => {
             <section>
                 <h1>Welcome to Token Huntr</h1>
                 <h2>Log In or Sign Up for New Adventures</h2>
-                <button onClick={() => navigate('/signin')}>
+                <button onClick={() => navigate('/auth/signin')}>
                     Log In Here
                 </button>
-                <button onClick={() => navigate('/register')}>
+                <button onClick={() => navigate('/auth/register')}>
                     Sign Up Here
                 </button>
             </section>

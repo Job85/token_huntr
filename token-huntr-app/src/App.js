@@ -48,8 +48,8 @@ const App = () => {
       <div>
         <Routes>
           <Route path='/' element={<Landing />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='login' element={<Login
+          <Route path='/auth/register' element={<Register />} />
+          <Route path='/login' element={<Login
             setUser={setUser}
             toggleAuthenticated={toggleAuthenticated} />} />
           <Route path='/home' element={<Home />} />
