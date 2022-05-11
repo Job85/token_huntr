@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import Nav from './components/Nav';
-import LocationForm from './components/LocationForm';
+// import LocationForm from './components/LocationForm';
 import Home from './components/Home';
 import LocationList from './components/LocationList';
 import './App.css';
@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/locations' element={<LocationList />} />
-          <Route path='/locations/create' element={<LocationForm />} />
+          {/* <Route path='/locations/create' element={<LocationForm />} /> */}
         </Routes>
       </div>
     </div>
