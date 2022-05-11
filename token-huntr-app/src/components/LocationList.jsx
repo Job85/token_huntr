@@ -13,7 +13,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const LocationList = (props) => {
-    console.log(props)
+
     useEffect(() => {
         props.fetchLocation()
     }, [])
