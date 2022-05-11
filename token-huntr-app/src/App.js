@@ -36,7 +36,11 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <Nav />
+        <Nav
+          authenticated={authenticated}
+          user={user}
+          handleLogOut={handleLogOut}
+        />
       </header>
       <h1>
         Token Huntr
