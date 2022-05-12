@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios'
+import { useParams } from 'react-router-dom';
 // import { useNavigate } from 'react-router-dom'
 // import LocationReducer from '../store/reducers/LocationReducer';
 
 
-const LocationForm = (user) => {
+const LocationForm = () => {
     // let navigate = useNavigate()
-    const user_id = user.id
-
+    let { user_id } = useParams()
+    const userId = user_id
+    console.log(user_id)
     const [formValues, setFormValues] = useState({
         latitude: '',
         longitude: '',
@@ -19,7 +21,8 @@ const LocationForm = (user) => {
     }
 
     const CreateCache = async () => {
-        let url = process.env.NODE_ENV === 'local' ? `http://localhost:3001/api//location/create_cache/${user_id}` : `https://token-huntr-app.herokuapp.com/api//location/create_cache/${user_id}`
+        // let url = process.env.NODE_ENV === 'local' ? `http://localhost:3001/api//location/create_cache/${user_id}` : `https://token-huntr-app.herokuapp.com/api//location/create_cache/${user_id}`
+        let url = process.env.NODE_ENV === `http://localhost:3001/api//location/create_cache/${userId}`
         await axios({
             url,
             method: 'post',
@@ -35,7 +38,7 @@ const LocationForm = (user) => {
             longitude: '',
             level: ''
         })
-        let newLocation = axios.post(`http://localhost:3001/api/location/create_cache/${user_id}`)
+        let newLocation = axios.post(`http://localhost:3001/api/location/create_cache/${userId}`, formValues)
         return newLocation
         // navigate('/locations'),
         // window.location.reload(false)
@@ -68,14 +71,16 @@ const LocationForm = (user) => {
                     </ul>
                     <ul>
                         <label>Level:</label>
-                        <select id='selectLvl'>
+                        <input
+                            name='level'
+                            value={formValues.level}
+                            onChange={handleChange}
+                        />
+                        {/* <select id='selectLvl'>
                             <option value='easy'>Easy</option>
                             <option value="moderate">Moderate</option>
                             <option value="hard">Hard</option>
-                            {/* name='level'
-                            value={formValues.level}
-                            onChange={handleChange} */}
-                        </select>
+                        </select> */}
                     </ul>
                     <button
                         disabled={

@@ -68,7 +68,7 @@ const App = () => {
           <Route path='/locations' element={<LocationList
             user={user}
             authenticated={authenticated} />} />
-          <Route path='/locations/create/:userId' element={<LocationForm />} />
+          <Route path='/locations/create/:user_id' element={<LocationForm />} />
         </Routes>
       </div>
     </div >
