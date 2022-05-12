@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 // import LocationReducer from '../store/reducers/LocationReducer';
 
 
-const CreateLocation = ({ user }) => {
+const CreateLocation = (user) => {
     let navigate = useNavigate()
     const user_id = user.id
 
