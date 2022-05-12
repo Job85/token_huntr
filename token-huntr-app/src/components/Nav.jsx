@@ -5,9 +5,9 @@ const Nav = () => {
         <div>
             <nav>
                 <Link to='/' >Home</Link>
-                <Link to='/Wallet'>My Wallet</Link>
-                <Link to='/Locations'>Locations</Link>
-                <Link to='/Rules'>Rules</Link>
+                <Link to='/wallet'>My Wallet</Link>
+                <Link to='/locations'>Locations</Link>
+                <Link to='/rules'>Rules</Link>
             </nav>
         </div>
     )
