@@ -6,7 +6,7 @@ const iState = {
     currentUser: {}
 };
 
-export const authorization = (state = iState, action) => {
+const AuthReducer = (state = iState, action) => {
     switch (action.type) {
         case AUTHENTICATED:
             return {
@@ -24,3 +24,5 @@ export const authorization = (state = iState, action) => {
             return state;
     }
 }
+
+export default AuthReducer

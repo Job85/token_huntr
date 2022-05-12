@@ -125,7 +125,7 @@ const Register = () => {
                                 type="password"
                                 name="confirmPassword"
                                 value={formValues.confirmPassword}
-                                required
+                                validations={[required]}
                             />
                         </div>
                         <div className="form-group">
