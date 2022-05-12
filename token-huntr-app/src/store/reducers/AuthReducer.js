@@ -1,4 +1,4 @@
-import { AUTHENTICATED, NOT_AUTHENTICATED } from '../actions/AuthActions'
+import { AUTHENTICATED, NOT_AUTHENTICATED } from '../types'
 
 const iState = {
     authChecked: false,

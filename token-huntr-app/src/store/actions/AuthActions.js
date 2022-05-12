@@ -72,3 +72,49 @@ export const loginUser = (credentials) => {
         });
     };
 };
+
+export const logoutUser = () => {
+    return (dispatch) => {
+        return fetch('http://localhost:3000/logout', {
+            method: 'Delete',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: getToken(),
+            },
+        }).then((res) => {
+            deleteToken()
+            if (res.ok) {
+                return res.json()
+                    .then(() => dispatch({ type: NOT_AUTHENTICATED }))
+            } else {
+                return res.json().then((errors) => {
+                    dispatch({ type: NOT_AUTHENTICATED })
+                    return Promise.reject(errors)
+                })
+            }
+        })
+    }
+}
+
+export const checkAuth = () => {
+    return (dispatch) => {
+        return fetch('http://localhost:3000/current_user', {
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: getToken()
+            }
+        }).then((res) => {
+            if (res.ok) {
+                return res
+                    .json()
+                    .then(user => {
+                        user.data ? dispatch({ type: AUTHENTICATED, payload: user }) : dispatch({ type: NOT_AUTHENTICATED })
+                    })
+            } else {
+                return Promise.reject(dispatch({ type: NOT_AUTHENTICATED }))
+            }
+        })
+    }
+}
