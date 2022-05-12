@@ -17,6 +17,9 @@ const comparePassword = async (storedPassword, password) => {
     let passwordMatch = await bcrypt.compare(password, storedPassword)
     // Returns true if the passwords match
     // Returns false if the passswords are not a match
+    console.log(password)
+    console.log(storedPassword)
+    console.log(passwordMatch)
     return passwordMatch
 }
 

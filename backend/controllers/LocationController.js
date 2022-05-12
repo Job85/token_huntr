@@ -21,6 +21,7 @@ const PostCache = async (req, res) => {
         const createCache = await Location.create(buildCache)
         res.send(createCache)
     } catch (error) {
+        console.log(error)
         throw error
     }
 }

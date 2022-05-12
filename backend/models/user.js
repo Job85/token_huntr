@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     passwordDigest: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.TEXT
     }
   }, {
     sequelize,
