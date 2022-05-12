@@ -90,7 +90,7 @@ const Register = () => {
                             type='text'
                             name='lastName'
                             placeholder='Schmoe'
-                            value={formValues.firstName}
+                            value={formValues.lastName}
                             onChange={handleChange}
                             validations={[required]}
                         />
