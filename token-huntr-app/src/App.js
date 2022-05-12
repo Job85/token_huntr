@@ -49,7 +49,7 @@ const App = () => {
       <div>
         <Routes>
           <Route path='/' element={<Landing />} />
-          <Route path='/auth/register' element={<Register />} />
+          <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login
             setUser={setUser}
             toggleAuthenticated={toggleAuthenticated} />} />
