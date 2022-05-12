@@ -13,20 +13,24 @@ const LogIn = (props) => {
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
-        const payload = await LogInUser(formValues)
-        setFormValues({ email: '', password: '' })
-        localStorage.setItem('user', payload.id)
-        props.setUser(payload)
-        props.toggleAuthenticated(true)
-        navigate('/home')
+        try {
+            const payload = await LogInUser(formValues)
+            setFormValues({ email: '', password: '' })
+            localStorage.setItem('user', payload.id)
+            props.setUser(payload)
+            props.toggleAuthenticated(true)
+            navigate('/home')
+        } catch (error) {
+            throw error
+        }
     }
 
     return (
         <div className="signin col">
             <div className="card-overlay centered">
-                <form className="col" onSubmit={handleSubmit}>
+                <form className="col" onSubmit={handleLogin}>
                     <div className="input-wrapper">
                         <label htmlFor="email">Email</label>
                         <input

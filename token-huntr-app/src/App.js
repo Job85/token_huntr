@@ -1,6 +1,6 @@
-import React from 'react';
-// import React, { useEffect, useState } from 'react';
-// import { CheckSession } from './services/AuthServices';
+// import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { CheckSession } from './services/AuthServices';
 import { Route, Routes } from 'react-router-dom'
 import Nav from './components/Nav';
 import Landing from './pages/LandingPage'
@@ -13,50 +13,52 @@ import './App.css';
 
 
 const App = () => {
-  // const [authenticated, toggleAuthenticated] = useState(false)
-  // const [user, setUser] = useState(null)
-  // console.log(process.env.NODE_ENV, 'Node Environment')
+  const [authenticated, toggleAuthenticated] = useState(false)
+  const [user, setUser] = useState(null)
+  console.log(process.env.NODE_ENV, 'Node Environment')
 
-  // const checkToken = async () => {
-  //   const user = await CheckSession();
-  //   setUser(user);
-  //   toggleAuthenticated(true);
-  // }
+  const checkToken = async () => {
+    const user = await CheckSession();
+    setUser(user);
+    toggleAuthenticated(true);
+  }
 
-  // const handleLogOut = () => {
-  //   setUser(null)
-  //   toggleAuthenticated(false)
-  //   localStorage.clear()
-  // }
+  const handleLogOut = () => {
+    setUser(null)
+    toggleAuthenticated(false)
+    localStorage.clear()
+  }
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token')
-  //   if (token) {
-  //     checkToken()
-  //   }
-  // }, [])
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      checkToken()
+    }
+  }, [])
   return (
     <div className="App">
       <header className="App-header">
         <Nav
-        // authenticated={authenticated}
-        // user={user}
-        // handleLogOut={handleLogOut}
+          authenticated={authenticated}
+          user={user}
+          handleLogOut={handleLogOut}
         />
       </header>
       <h1>
         Token Huntr
       </h1>
       <div>
-        <Routes>
+        {/* <Routes>
           <Route path='/' element={<Landing />} />
           <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login />} />
+          <Route path='/login' element={<Login
+            setUser={setUser}
+            toggleAuthenticated={toggleAuthenticated} />} />
           <Route path='/home' element={<Home />} />
           <Route path='/locations' element={<LocationList />} />
           <Route path='/locations/create/:userId' element={<LocationForm />} />
-        </Routes>
-        {/* <Routes>
+        </Routes> */}
+        <Routes>
           <Route path='/' element={<Landing />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login
@@ -65,9 +67,9 @@ const App = () => {
           <Route path='/home' element={<Home />} />
           <Route path='/locations' element={<LocationList
             user={user}
-            authenticated={authenticated} />} />}
-         <Route path='/locations/create/:userId' element={<LocationForm />} />
-      </Routes> */}
+            authenticated={authenticated} />} />
+          <Route path='/locations/create/:userId' element={<LocationForm />} />
+        </Routes>
       </div>
     </div >
   );
