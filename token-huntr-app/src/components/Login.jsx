@@ -1,102 +1,62 @@
-import React, { useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import { Redirect } from 'react-router-dom';
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
-import { login } from "../actions/auth";
+import { LogInUser } from '../services/AuthServices'
+// import { login } from "../actions/auth";
 
-const required = (value) => {
-    if (!value) {
-        return (
-            <div className="alert alert-danger" role="alert">
-                This field is required!
-            </div>
-        );
+const LogIn = (props) => {
+    let navigate = useNavigate()
+
+    const [formValues, setFormValues] = useState({ email: '', password: '' })
+
+    const handleChange = (e) => {
+        setFormValues({ ...formValues, [e.target.name]: e.target.value })
     }
-};
-const Login = (props) => {
-    const form = useRef();
-    const checkBtn = useRef();
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
-    const { isLoggedIn } = useSelector(state => state.auth);
-    const { message } = useSelector(state => state.message);
-    const dispatch = useDispatch();
-    const onChangeUsername = (e) => {
-        const username = e.target.value;
-        setUsername(username);
-    };
-    const onChangePassword = (e) => {
-        const password = e.target.value;
-        setPassword(password);
-    };
-    const handleLogin = (e) => {
-        e.preventDefault();
-        setLoading(true);
-        form.current.validateAll();
-        if (checkBtn.current.context._errors.length === 0) {
-            dispatch(login(username, password))
-                .then(() => {
-                    props.history.push("/home");
-                    window.location.reload();
-                })
-                .catch(() => {
-                    setLoading(false);
-                });
-        } else {
-            setLoading(false);
-        }
-    };
-    if (isLoggedIn) {
-        return <Redirect to="/home" />;
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const payload = await SignInUser(formValues)
+        setFormValues({ email: '', password: '' })
+        localStorage.setItem('user', payload.id)
+        props.setUser(payload)
+        props.toggleAuthenticated(true)
+        navigate('/home')
     }
+
     return (
-        <div className="col-md-12">
-            <div className="card card-container">
-                <Form onSubmit={handleLogin} ref={form}>
-                    <div className="form-group">
-                        <label htmlFor="username">Username</label>
-                        <Input
-                            type="text"
-                            className="form-control"
-                            name="username"
-                            value={username}
-                            onChange={onChangeUsername}
-                            validations={[required]}
+        <div className="signin col">
+            <div className="card-overlay centered">
+                <form className="col" onSubmit={handleSubmit}>
+                    <div className="input-wrapper">
+                        <label htmlFor="email">Email</label>
+                        <input
+                            onChange={handleChange}
+                            name="email"
+                            type="email"
+                            placeholder="example@example.com"
+                            value={formValues.email}
+                            required
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="input-wrapper">
                         <label htmlFor="password">Password</label>
-                        <Input
+                        <input
+                            onChange={handleChange}
                             type="password"
-                            className="form-control"
                             name="password"
-                            value={password}
-                            onChange={onChangePassword}
-                            validations={[required]}
+                            value={formValues.password}
+                            required
                         />
                     </div>
-                    <div className="form-group">
-                        <button className="btn btn-primary btn-block" disabled={loading}>
-                            {loading && (
-                                <span className="spinner-border spinner-border-sm"></span>
-                            )}
-                            <span>Login</span>
-                        </button>
-                    </div>
-                    {message && (
-                        <div className="form-group">
-                            <div className="alert alert-danger" role="alert">
-                                {message}
-                            </div>
-                        </div>
-                    )}
-                    <CheckButton style={{ display: "none" }} ref={checkBtn} />
-                </Form>
+                    <button disabled={!formValues.email || !formValues.password}>
+                        Log In
+                    </button>
+                    <button onClick={() => navigate('/register')}>
+                        Account Needed. Sign up here!
+                    </button>
+                </form>
             </div>
         </div>
-    );
-};
-export default Login;
+    )
+}
+
+export default LogIn
