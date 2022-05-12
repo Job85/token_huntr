@@ -1,74 +1,49 @@
-import axios from 'axios';
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Form, Field } from 'react-final-form'
+import React, { useReducer } from 'react';
+import LocationReducer from '../store/reducers/LocationReducer';
 
-const onSubmit = async values => {
-    let { userId } = useParams()
-    await axios.post(`http://localhost:3001/api/location/create_cache/${userId}`)
+
+const LocationForm = (props) => {
+    console.log(props)
+    return (
+        <div className='local-form'>
+            <h2>Add a New Geocache</h2>
+            <h4>Fill out form below!</h4>
+            <form onSubmit={props.handleSubmit}>
+                <ul>
+                    <ul>
+                        <label>Latitude:</label>
+                        <input type='text'
+                            placeholder={'Latitude'}
+                            name='newLocation'
+                            // value={props.newLocation.latitude}
+                            onChange={props.handleChange}
+                        />
+                    </ul>
+                    <ul>
+                        <label>Longitude:</label>
+                        <input type='text'
+                            placeholder={'Longitude'}
+                            name='newLocation'
+                            value={props.newLocation.longitude}
+                            onChange={props.handleChange}
+                        />
+                    </ul>
+                    <ul>
+                        <label>Level:</label>
+                        <input type='text'
+                            placeholder={'Level'}
+                            name='newLocation'
+                            value={props.newLocation.level}
+                            onChange={props.handleChange}
+                        />
+                    </ul>
+                    <button type='submit' onClick={props.handleSubmit}>
+                        Add Cache
+                    </button>
+                </ul>
+            </form>
+        </div>
+    )
 }
 
-const required = value => (value ? undefined : 'Required');
-
-const CacheForm = () => (
-    < div >
-        <Form
-            onSubmit={onSubmit}
-            render={({ handleSubmit, reset, submitting, pristine, values }) => (
-                <form onSubmit={handleSubmit}>
-                    <Field
-                        name='latitude'
-                        validate={required}
-                    >
-                        {({ input, meta }) => (
-                            <div>
-                                <label>Latitude</label>
-                                <input {...input} type='text' placeholder='Latitude' />
-                                {meta.error && meta.touched && <span>{meta.error}</span>}
-                            </div>
-                        )}
-                    </Field>
-                    <Field
-                        name='longitude'
-                        validate={required}
-                    >
-                        {({ input, meta }) => (
-                            <div>
-                                <label>Longitude</label>
-                                <input {...input} type='text' placeholder='Longitude' />
-                                {meta.error && meta.touched && <span>{meta.error}</span>}
-                            </div>
-                        )}
-                    </Field>
-                    <Field
-                        name="level"
-                        validate={required}
-                    >
-                        {({ input, meta }) => (
-                            <div>
-                                <label>level</label>
-                                <input {...input} type="text" placeholder='Easy, Moderate, Hard' />
-                                {meta.error && meta.touched && <span>{meta.error}</span>}
-                            </div>
-                        )}
-                    </Field>
-                    <div className="buttons">
-                        <button type="submit" disabled={submitting}>
-                            Submit
-                        </button>
-                        <button
-                            type="button"
-                            onClick={reset}
-                            disabled={submitting || pristine}
-                        >
-                            Reset
-                        </button>
-                    </div>
-                    <pre>{JSON.stringify(values, 0, 2)}</pre>
-                </form>
-            )}
-        />
-    </div >
-)
-
-export default CacheForm
+export default LocationForm
