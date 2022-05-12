@@ -7,7 +7,7 @@ import Register from './components/Register';
 import Login from './components/Login'
 import Home from './components/Home'
 import LocationList from './components/LocationList';
-// import LocationForm from './components/LocationForm';
+import LocationForm from './components/LocationForm';
 import './App.css';
 
 
@@ -57,7 +57,9 @@ const App = () => {
           <Route path='/locations' element={<LocationList
             user={user}
             authenticated={authenticated} />} />
-          {/* <Route path='/locations/create' element={<LocationForm />} /> */}
+          <Route path='/locations/create' element={<LocationForm
+            user={user}
+            authenticated={authenticated} />} />
         </Routes>
       </div>
     </div>
