@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 // import LocationReducer from '../store/reducers/LocationReducer';
 
 
-const CreateLocation = (user) => {
-    let navigate = useNavigate()
+const LocationForm = (user) => {
+    // let navigate = useNavigate()
     const user_id = user.id
 
     const [formValues, setFormValues] = useState({
@@ -19,7 +19,7 @@ const CreateLocation = (user) => {
     }
 
     const CreateCache = async () => {
-        let url = process.env.NODE_ENV === 'local' ? `http://localhost:3001/api/post/${user_id}` : `https://token-huntr-app.herokuapp.com/api/post/${user_id}`
+        let url = process.env.NODE_ENV === 'local' ? `http://localhost:3001/api//location/create_cache/${user_id}` : `https://token-huntr-app.herokuapp.com/api//location/create_cache/${user_id}`
         await axios({
             url,
             method: 'post',
@@ -35,8 +35,10 @@ const CreateLocation = (user) => {
             longitude: '',
             level: ''
         })
-        navigate('/locations')
-        window.location.reload(false)
+        let newLocation = axios.post(`http://localhost:3001/api/location/create_cache/${user_id}`)
+        return newLocation
+        // navigate('/locations'),
+        // window.location.reload(false)
     }
 
     return (
@@ -66,18 +68,20 @@ const CreateLocation = (user) => {
                     </ul>
                     <ul>
                         <label>Level:</label>
-                        <input type='text'
-                            placeholder={'Easy, Moderate, Hard'}
-                            name='level'
+                        <select id='selectLvl'>
+                            <option value='easy'>Easy</option>
+                            <option value="moderate">Moderate</option>
+                            <option value="hard">Hard</option>
+                            {/* name='level'
                             value={formValues.level}
-                            onChange={handleChange}
-                        />
+                            onChange={handleChange} */}
+                        </select>
                     </ul>
                     <button
                         disabled={
                             !formValues.latitude ||
-                            !formValues.longitude ||
-                            !formValues.level
+                            !formValues.longitude
+                            // !formValues.level
                         }
                     >
                         Add Cache
@@ -88,4 +92,4 @@ const CreateLocation = (user) => {
     )
 }
 
-export default CreateLocation
+export default LocationForm
