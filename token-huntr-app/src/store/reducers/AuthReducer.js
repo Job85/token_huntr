@@ -6,7 +6,7 @@ const iState = {
     currentUser: {}
 };
 
-export default function authorization(state = iState, action) {
+export const authorization = (state = iState, action) => {
     switch (action.type) {
         case AUTHENTICATED:
             return {
