@@ -3,7 +3,7 @@ import Axios from 'axios'
 
 export const BASE_URL = process.env.NODE_ENV === 'local' ? 'http://localhose:3001/api' : 'https://token-huntr.com/api'
 console.log(BASE_URL, "You're in BASE_URL")
-const TokenHuntr = Axios.create({ baseURL: 'http://localhost:3001' })
+const TokenHuntr = Axios.create({ baseURL: BASE_URL })
 
 TokenHuntr.interceptors.request.use(
     (config) => {
