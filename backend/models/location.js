@@ -25,19 +25,11 @@ module.exports = (sequelize, DataTypes) => {
   Location.init({
     latitude: {
       allowNull: false,
-      type: DataTypes.INTEGER,
-      validate: {
-        min: -90.000000,
-        max: 90.000000
-      }
+      type: DataTypes.STRING
     },
     longitude: {
       allowNull: false,
-      type: DataTypes.INTEGER,
-      validate: {
-        min: -180.000000,
-        max: 180.000000
-      }
+      type: DataTypes.STRING
     },
     level: {
       allowNull: false,

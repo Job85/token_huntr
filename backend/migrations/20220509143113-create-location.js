@@ -10,19 +10,11 @@ module.exports = {
       },
       latitude: {
         allowNull: false,
-        type: Sequelize.INTEGER,
-        validate: {
-          min: -90.000000,
-          max: 90.000000
-        }
+        type: Sequelize.STRING
       },
       longitude: {
         allowNull: false,
-        type: Sequelize.INTEGER,
-        validate: {
-          min: -180.000000,
-          max: 180.000000
-        }
+        type: Sequelize.STRING
       },
       level: {
         allowNull: false,
