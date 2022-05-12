@@ -1,6 +1,6 @@
 import TokenHuntr from './index'
 
-export const LoginUser = async (data) => {
+export const LogInUser = async (data) => {
     try {
         const res = await TokenHuntr.post('/auth/login', data)
         localStorage.setItem('token', res.data.token)
