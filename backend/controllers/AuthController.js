@@ -1,6 +1,5 @@
 const { User } = require('../models')
 const middleware = require('../middleware')
-const { compare } = require('bcrypt')
 
 const Login = async (req, res) => {
     try {
@@ -17,7 +16,6 @@ const Login = async (req, res) => {
                 email: user.email
             }
             let token = middleware.createToken(payload)
-            console.log(user.passwordDigest)
             return res.send({ user: payload, token })
         }
         res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
