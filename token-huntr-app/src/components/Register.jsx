@@ -52,19 +52,24 @@ const Register = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault()
-        await RegisterUser({
-            firstName: formValues.firstName,
-            lastName: formValues.lastName,
-            email: formValues.email,
-            password: formValues.password
-        })
-        setFormValues({
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            confirmPassword: ''
-        })
+        try {
+            await RegisterUser({
+                firstName: formValues.firstName,
+                lastName: formValues.lastName,
+                email: formValues.email,
+                password: formValues.password
+            })
+            setFormValues({
+                firstName: '',
+                lastName: '',
+                email: '',
+                password: '',
+                confirmPassword: ''
+            })
+        } catch (error) {
+            throw error
+        }
+
         navigate('/login')
     }
 
