@@ -1,10 +1,8 @@
-import React, { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Form from "react-validation/build/form";
-import Input from 'react-validation/build/input';
-import CheckButton from 'react-validation/build/button';
+import React, { useState } from 'react';
 import { isEmail } from 'validator';
-import { register } from '../store/actions/AuthActions';
+import { RegisterUser } from '../services/AuthServices';
+import { useNavigate } from 'react-router-dom';
+// import { register } from '../store/actions/AuthActions';
 
 const required = value => {
     if (!value) {
@@ -36,91 +34,98 @@ const validPassword = (value) => {
     }
 }
 
-const validUserName = (value) => {
-    if (value.length < 3 || value.length > 20) {
-        return (
-            <div className='alert alert-danger' role='alert'>
-                Usernames must be between 3 and 20 characters!
-            </div>
-        )
-    }
-}
 
 const Register = () => {
-    const form = useRef();
-    const checkBtn = useRef();
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [successful, setSuccessful] = useState(false);
-    const { message } = useSelector(state => state.message);
-    const dispatch = useDispatch();
+    let navigate = useNavigate()
 
-    const onChangeUsername = (e) => {
-        setUsername(username);
-    };
+    const [formValues, setFormValues] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    })
 
-    const onChangeEmail = (e) => {
-        const email = e.target.value;
-        setEmail(email);
-    };
+    const handleChange = (e) => {
+        setFormValues({ ...formValues, [e.target.name]: e.target.value })
+    }
 
-    const onChangePassword = (e) => {
-        const password = e.target.value;
-        setPassword(password);
-    };
+    const handleRegister = async (e) => {
+        e.preventDefault()
+        await RegisterUser({
+            firstName: formValues.firstName,
+            lastName: formValues.lastName,
+            email: formValues.email,
+            password: formValues.password
+        })
+        setFormValues({
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            confirmPassword: ''
+        })
+        navigate('/login')
 
-    const handleRegister = (e) => {
-        e.preventDefault();
-        setSuccessful(false);
-        form.current.validateAll();
-        if (checkBtn.current.context._errors.length === 0) {
-            dispatch(register(username, email, password))
-                .then(() => {
-                    setSuccessful(true);
-                })
-                .catch(() => {
-                    setSuccessful(false);
-                });
-        }
-    };
+    }
 
     return (
-        <div className='col-md-12'>
-            <Form onSubmit={handleRegister} ref={form}>
+        <div className='login col'>
+            <form onSubmit={handleRegister} ref={form}>
                 {!successful && (
                     <div>
                         <div className='form-group'>
-                            <label htmlFor='username'>Username</label>
-                            <Input
+                            <label htmlFor='username'>First Name</label>
+                            <input
                                 type='text'
-                                className='form-control'
-                                name='username'
-                                value={username}
-                                onChange={onChangeUsername}
-                                validations={[required, validUserName]}
+                                name='firstName'
+                                placeholder='Joe'
+                                value={formValues.firstName}
+                                onChange={handleChange}
+                                validations={[required]}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor='username'>Last Name</label>
+                            <input
+                                type='text'
+                                name='lastName'
+                                placeholder='Schmoe'
+                                value={formValues.firstName}
+                                onChange={handleChange}
+                                validations={[required]}
                             />
                         </div>
                         <div className="form-group">
                             <label htmlFor="email">Email</label>
-                            <Input
+                            <input
                                 type="text"
-                                className="form-control"
+                                placeholder='example@email.com'
                                 name="email"
-                                value={email}
-                                onChange={onChangeEmail}
+                                value={formValues.email}
+                                onChange={handleChange}
                                 validations={[required, validEmail]}
                             />
                         </div>
                         <div className="form-group">
                             <label htmlFor="password">Password</label>
-                            <Input
+                            <input
                                 type="password"
-                                className="form-control"
                                 name="password"
-                                value={password}
-                                onChange={onChangePassword}
-                                validations={[required, vpassword]}
+                                placeholder='password'
+                                value={formValues.password}
+                                onChange={handleChange}
+                                validations={[required, validPassword]}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="confirmPassword">Confirm Password</label>
+                            <input
+                                onChange={handleChange}
+                                type="password"
+                                name="confirmPassword"
+                                value={formValues.confirmPassword}
+                                required
                             />
                         </div>
                         <div className="form-group">
@@ -135,8 +140,18 @@ const Register = () => {
                         </div>
                     </div>
                 )}
-                <CheckButton style={{ display: "none" }} ref={checkBtn} />
-            </Form>
+                <button
+                    disabled={
+                        !formValues.firstName ||
+                        !formValues.lastName ||
+                        !formValues.email ||
+                        (!formValues.password &&
+                            formValues.confirmPassword === formValues.password)
+                    }
+                >
+                    Register
+                </button>
+            </form>
         </div>
     )
 
