@@ -9,27 +9,22 @@ import Login from './components/Login'
 import Home from './components/Home'
 import LocationList from './components/LocationList';
 import LocationForm from './components/LocationForm';
-import axios from 'axios';
 import './App.css';
 
 
 const App = () => {
+  console.log(process.env.NODE_ENV, 'Node Environment')
+
   const [authenticated, toggleAuthenticated] = useState(false)
 
   // sets user state for authorized routes
   const [user, setUser] = useState(null)
 
-  // sets userId state to create/update/delete locations
-  const [userId, setId] = useState(null)
-
-  console.log(process.env.NODE_ENV, 'Node Environment')
 
   const checkToken = async () => {
     const user = await CheckSession();
-    console.log('hey', user)
     setUser(user);
     toggleAuthenticated(true);
-    console.log(toggleAuthenticated)
   }
 
   const handleLogOut = () => {
@@ -43,7 +38,7 @@ const App = () => {
     if (token && user) {
       checkToken()
     }
-  }, [])
+  })
 
   return (
     <div className="App">
