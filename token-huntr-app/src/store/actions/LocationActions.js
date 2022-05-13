@@ -2,6 +2,7 @@
 // import { GET_LOCATIONS, ADD_LOCATION, NEW_LOCATION, UPDATE_LOCATION, REMOVE_LOCATION } from "../types";
 
 // export const LoadLocations = () => {
+//     // console.log(dispatch)
 //     return async (dispatch) => {
 //         try {
 //             const locations = await GetLocations()

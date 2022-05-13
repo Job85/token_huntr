@@ -21,6 +21,7 @@ const LogIn = (props) => {
             localStorage.setItem('user', payload.id)
             props.setUser(payload)
             props.toggleAuthenticated(true)
+            console.log(payload)
             navigate('/home')
         } catch (error) {
             throw error

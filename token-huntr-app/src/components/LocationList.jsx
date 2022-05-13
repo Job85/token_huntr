@@ -1,32 +1,37 @@
-import { connect } from 'react-redux';
-import { LoadLocations } from '../store/actions/LocationActions';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+// import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
-const mapStateToProps = ({ locationsState }) => {
-    return { locationsState }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchLocations: () => dispatch(LoadLocations())
-    }
-}
 
 const LocationList = (props) => {
-
+    const [location, setLocations] = useState([])
+    // const location_id = location.id;
+    // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    // let url = process.env.NODE_ENV === `http://localhost:3001/api/location`
     useEffect(() => {
-        props.fetchLocation()
+        const GetLocations = async () => {
+            // await sleep(6000);
+            const location = await axios.get(`http://localhost:3001/api/location`)
+            setLocations(location.data)
+            console.log(location)
+        }
+        GetLocations()
+            .catch(console.error)
     }, [])
 
     return (
         <div>
-            {props.locationsState.location.map((location) => (
-                <div className='cache' key={location.id}>
-                    <h2>{location.latitude},{location.longitude}</h2>
-                </div>
-            ))}
+            <h1>GeoCache Locations</h1>
+            <div>
+                {location.map((cache, i) => (
+                    <li className='location-card' key={i}>
+                        <span className='location-card-span'>Coordinates: {cache.latitude},{cache.longitude}</span>
+                        <span className='location-card-span'>Difficulty Level: {cache.level}</span>
+                    </li>
+                ))}
+            </div>
         </div>
     )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LocationList)
+export default LocationList //connect(mapStateToProps, mapDispatchToProps)()
