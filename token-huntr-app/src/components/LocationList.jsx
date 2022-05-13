@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
-// import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 
-const LocationList = (props) => {
+const LocationList = () => {
     const [location, setLocations] = useState([])
-    // const location_id = location.id;
-    // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-    // let url = process.env.NODE_ENV === `http://localhost:3001/api/location`
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     useEffect(() => {
         const GetLocations = async () => {
-            // await sleep(6000);
+            await sleep(6000);
             const location = await axios.get(`http://localhost:3001/api/location`)
             setLocations(location.data)
             console.log(location)
@@ -34,4 +31,4 @@ const LocationList = (props) => {
     )
 }
 
-export default LocationList //connect(mapStateToProps, mapDispatchToProps)()
+export default LocationList

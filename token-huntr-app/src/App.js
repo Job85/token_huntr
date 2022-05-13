@@ -32,10 +32,6 @@ const App = () => {
     console.log(toggleAuthenticated)
   }
 
-  const getUserId = async () => {
-    const id = await axios.get()
-  }
-
   const handleLogOut = () => {
     setUser(null)
     toggleAuthenticated(false)
@@ -44,18 +40,11 @@ const App = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token')
-    // console.log(token)
-    if (token) {
+    if (token && user) {
       checkToken()
     }
-    // console.log(user)
   }, [])
 
-  // useEffect(() => {
-  //   let id = await getId()
-  //   console.log(id)
-  //   setId(id.data)
-  // })
   return (
     <div className="App">
       <header className="App-header">
@@ -69,16 +58,6 @@ const App = () => {
         Token Huntr
       </h1>
       <div>
-        {/* <Routes>
-          <Route path='/' element={<Landing />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login
-            setUser={setUser}
-            toggleAuthenticated={toggleAuthenticated} />} />
-          <Route path='/home' element={<Home />} />
-          <Route path='/locations' element={<LocationList />} />
-          <Route path='/locations/create/:userId' element={<LocationForm />} />
-        </Routes> */}
         <Routes>
           <Route path='/' element={<Landing />} />
           <Route path='/register' element={<Register />} />
