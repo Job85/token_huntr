@@ -10,7 +10,22 @@ const GetLocation = async (req, res) => {
     }
 }
 
+const GetCacheById = async (req, res) => {
+    let locationId = parseInt(req.params.locationId)
+    try {
+        const cache = await Location.findByPk(locationId, {
+            where: { id: locationId },
+            returning: true
+        })
+        console.log(cache)
+        res.send(cache)
+    } catch (error) {
+        throw error
+    }
+}
+
 const PostCache = async (req, res) => {
+    console.log(req.params)
     const userId = parseInt(req.params.userId)
     try {
         let buildCache = {
@@ -59,6 +74,7 @@ const DeleteCache = async (req, res) => {
 
 module.exports = {
     GetLocation,
+    GetCacheById,
     PostCache,
     UpdateCache,
     DeleteCache
