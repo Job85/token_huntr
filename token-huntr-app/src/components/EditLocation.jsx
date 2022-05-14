@@ -52,10 +52,11 @@ const EditForm = () => {
             longitude: '',
             level: ''
         })
-        axios.put(`http://localhost:3001/api/location/update_cache/${location_id}`)
+        axios.put(`http://localhost:3001/api/location/update_cache/${location_id}`, formValues)
         // navigate('/locations');
         // window.refresh.reload(false)
     }
+
 
 
     return (
