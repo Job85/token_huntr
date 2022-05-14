@@ -22,10 +22,10 @@ const LocationList = () => {
             <div>
                 {location.map((cache, i) => (
                     <li className='location-card' key={i}>
-                        <span className='location-card-span'>
+                        <span className='location-span'>
                             Coordinates: {cache.latitude},{cache.longitude}
                         </span>
-                        <span className='location-card-span'>
+                        <span className='location-span'>
                             Difficulty Level: {cache.level}
                         </span>
                         <Link to={`/locations/${cache.id}`} key={cache.id}>
