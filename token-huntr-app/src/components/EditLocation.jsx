@@ -6,13 +6,13 @@ import axios from "axios";
 
 
 const EditForm = () => {
-    // const location_id = useParams
-    const [cache, setCache] = useState({})
+
     const [formValues, setFormValues] = useState({
         latitude: '',
         longitude: '',
         level: ''
     })
+
     let { location_id } = useParams()
 
     useEffect(() => {
@@ -22,7 +22,7 @@ const EditForm = () => {
                 `http://localhost:3001/api/location/${location_id}`
             )
             if (!isCancelled) {
-                setCache(res.data)
+                setFormValues(res.data)
             }
         }
         getCache()
@@ -37,7 +37,7 @@ const EditForm = () => {
 
     const UpdateCache = async () => {
         let url = process.env.NODE_ENV === `http://localhost:3001/api/location/update_cache/${location_id}`
-        await axios({
+        await axios.put({
             url,
             method: 'put',
             data: formValues
@@ -46,13 +46,13 @@ const EditForm = () => {
     const handleSubmit = async (e) => {
         console.log('button clicked')
         e.preventDefault();
-        UpdateCache()
+        UpdateCache();
         setFormValues({
             latitude: '',
             longitude: '',
             level: ''
         })
-        axios.put(`http://localhost:3001/api/location/update_cache/${location_id}`, formValues)
+        axios.put(`http://localhost:3001/api/location/update_cache/${location_id}`)
         // navigate('/locations');
         // window.refresh.reload(false)
     }
@@ -68,9 +68,8 @@ const EditForm = () => {
                                 <label htmlFor="latitude">Latitude:</label>
                                 <input
                                     value={formValues.latitude}
-                                    // value={cache.latitude}
                                     type="text"
-                                    placeholder={cache.latitude}
+                                    placeholder={formValues.latitude}
                                     name='latitude'
                                     onChange={handleChange}
                                     // onChange={(e) => { setLatitude(e.target.value) }}
@@ -81,9 +80,8 @@ const EditForm = () => {
                                 <label htmlFor="longitude">Longitude:</label>
                                 <input
                                     value={formValues.longitude}
-                                    // value={cache.longitude}
                                     type="text"
-                                    placeholder={cache.longitude}
+                                    placeholder={formValues.longitude}
                                     name='longitude'
                                     onChange={handleChange}
                                     // onChange={(e) => { setLongitude(e.target.value) }}
@@ -93,8 +91,7 @@ const EditForm = () => {
                             <span>
                                 <label htmlFor="level">Level:</label>
                                 <select
-                                    placeholder={cache.level}
-                                    // value={cache.level}
+                                    placeholder={formValues.level}
                                     value={formValues.level}
                                     name='level'
                                     onChange={handleChange}
@@ -106,10 +103,10 @@ const EditForm = () => {
                                 </select>
                             </span>
                         </ul>
+                        <div>
+                            <button>Save</button>
+                        </div>
                     </form>
-                </div>
-                <div>
-                    <button>Save</button>
                 </div>
                 {/* <div onClick={() => handleDelete(gotCache.id)}>
                     <button id="deleteButton" type="submit">Delete Cache</button>
