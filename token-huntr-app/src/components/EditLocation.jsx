@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import DeleteLocation from "./DeleteLocation";
 // useLocation, useNavigate
 
 
@@ -57,6 +58,10 @@ const EditForm = () => {
         // window.refresh.reload(false)
     }
 
+    const handleDelete = async (id) => {
+        console.log('button clicked')
+        await axios.delete(`http://localhost:3001/api/location/delete_cache/${location_id}`)
+    }
 
 
     return (
@@ -108,10 +113,11 @@ const EditForm = () => {
                             <button>Save</button>
                         </div>
                     </form>
+                    {/* <DeleteLocation location_id={location_id} /> */}
                 </div>
-                {/* <div onClick={() => handleDelete(gotCache.id)}>
+                <div onClick={() => handleDelete(location_id)}>
                     <button id="deleteButton" type="submit">Delete Cache</button>
-                </div> */}
+                </div>
             </div>
         </div >
     )
