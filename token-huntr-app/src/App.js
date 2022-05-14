@@ -1,6 +1,6 @@
-// import React from 'react';
 import React, { useEffect, useState } from 'react';
 import { CheckSession } from './services/AuthServices';
+import './App.css';
 import { Route, Routes } from 'react-router-dom'
 import Nav from './components/Nav';
 import Landing from './pages/LandingPage'
@@ -9,7 +9,7 @@ import Login from './components/Login'
 import Home from './components/Home'
 import LocationList from './components/LocationList';
 import LocationForm from './components/LocationForm';
-import './App.css';
+import EditCache from './components/EditLocation';
 
 
 const App = () => {
@@ -66,6 +66,10 @@ const App = () => {
             authenticated={authenticated}
           />} />
           <Route path='/locations/create/:user_id' element={<LocationForm
+            user={user}
+            authenticated={authenticated}
+          />} />
+          <Route path={`/locations/:location_id`} element={<EditCache
             user={user}
             authenticated={authenticated}
           />} />

@@ -17,7 +17,7 @@ const LocationForm = ({ user }) => {
     })
 
     const handleChange = (e) => {
-        console.log(formValues)
+        // console.log(formValues)
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
     }
 

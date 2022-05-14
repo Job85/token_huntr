@@ -3,15 +3,14 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const LocationList = () => {
-
     const [location, setLocations] = useState([])
     const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     useEffect(() => {
         const GetLocations = async () => {
-            await sleep(6000);
+            await sleep(1000);
             const location = await axios.get(`http://localhost:3001/api/location`)
             setLocations(location.data)
-            console.log(location)
+            console.log(location.data)
         }
         GetLocations()
             .catch(console.error)
@@ -29,7 +28,7 @@ const LocationList = () => {
                         <span className='location-card-span'>
                             Difficulty Level: {cache.level}
                         </span>
-                        <Link to={`/locations/${location.id}`}>
+                        <Link to={`/locations/${cache.id}`} key={cache.id}>
                             <button>
                                 Edit Location
                             </button>
